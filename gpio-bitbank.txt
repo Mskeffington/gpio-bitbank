@@ -1,0 +1,23 @@
+* GPIO bitbank DT bindings
+
+GPIO bitbank takes a set of GPIOs and exposes them as a signed integer in the sysfs
+
+Required Properties:
+- compatible: should be "gpio-bitbank"
+- gpios: a set of gpios (at least two) to be decoded to an unsigned integer with
+		first entry representing the MSB.
+
+Optional Properties:
+- label: The label for this device. If omitted, the label is taken from the node
+		name. It has to uniquely identify a device, i.e. no other platform device
+		can be assigned the same label.
+
+Example:
+	hwrev {
+		compatible = "gpio-bitbank";
+		label = "hardware_revision"
+		gpios = <&gpio1 0 GPIO_ACTIVE_HIGH>,
+				<&gpio1 1 GPIO_ACTIVE_HIGH>,
+				<&gpio2 1 GPIO_ACTIVE_HIGH>,
+				<&gpio2 5 GPIO_ACTIVE_HIGH>;
+	};
