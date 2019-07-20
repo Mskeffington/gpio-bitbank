@@ -1,7 +1,14 @@
 obj-m += gpio-bitbank.o
 
+SRC := $(shell pwd)
+KERNEL_SRC ?= /lib/modules/$(shell uname -r)/build
+
 all:
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+	$(MAKE) -C $(KERNEL_SRC) M=$(SRC) modules
 
 clean:
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+	$(MAKE) -C $(KERNEL_SRC) M=$(SRC) clean
+	
+modules_install:
+	$(MAKE) -C $(KERNEL_SRC) M=$(SRC) modules_install
+	
