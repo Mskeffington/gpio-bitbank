@@ -19,7 +19,7 @@ static int gpio_bitbank_get_gpios_state(struct device *dev, struct gpio_bitbank_
 	struct gpio_descs *gpios = pdata->input_gpios;
 	unsigned int i, ret = 0;
 	int val;
-    
+	
 	for (i = 0; i < 4; ++i) {
 		val = gpiod_get_value_cansleep(gpios->desc[i]);
 		if (val < 0) {
@@ -36,8 +36,7 @@ static int gpio_bitbank_get_gpios_state(struct device *dev, struct gpio_bitbank_
 
 
 static ssize_t gpio_bitbank_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf) {
-	
-    struct device* dev = (struct device*)kobj;
+	struct device* dev = (struct device*)kobj;
 	struct gpio_bitbank_plat_data *pdata = dev_get_drvdata(dev);
 
 	int gpioval = gpio_bitbank_get_gpios_state(dev, pdata);
@@ -48,11 +47,10 @@ static struct kobj_attribute gpio_bitbank_attribute =__ATTR(value, 0444, gpio_bi
 
 
 static int gpio_bitbank_probe(struct platform_device *pdev) {
-    
 	struct device *dev = &pdev->dev;
 	struct gpio_bitbank_plat_data *pdata = devm_kzalloc(dev, sizeof(struct gpio_bitbank_plat_data), GFP_KERNEL);
-    int ret;
-    
+	int ret;
+	
 	if (!pdata) {
 		dev_err(dev, "Unable to allocate pdata.\n");
 		return -ENOMEM;
@@ -63,9 +61,9 @@ static int gpio_bitbank_probe(struct platform_device *pdev) {
 	pdata->input_gpios = devm_gpiod_get_array(dev, NULL, GPIOD_IN);
 
 	if (IS_ERR(pdata->input_gpios)) {
-        ret = PTR_ERR(pdata->input_gpios);
+		ret = PTR_ERR(pdata->input_gpios);
 		if (ret != -EPROBE_DEFER)
-            dev_err(dev, "Unable to acquire gpios.\n");
+			dev_err(dev, "Unable to acquire gpios.\n");
 		return ret;
 	}
 
