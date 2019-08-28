@@ -10,7 +10,6 @@
 #include <linux/of.h>
 
 struct gpio_bitbank_plat_data {
-	const char *label;
 	struct gpio_descs *input_gpios;  
 };
 
